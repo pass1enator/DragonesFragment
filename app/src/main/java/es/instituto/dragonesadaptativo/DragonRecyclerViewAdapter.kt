@@ -9,9 +9,10 @@ import es.instituto.dragonesadaptativo.databinding.FragmentItemBinding
 import es.instituto.dragonesadaptativo.models.Dragon
 
 
-class DragonRecyclerViewAdapter( private val values: List<Dragon>
+class DragonRecyclerViewAdapter(
+    private val values: List<Dragon>
 ) : RecyclerView.Adapter<DragonRecyclerViewAdapter.ViewHolder>() {
-    // var listener: OnClickListenerDragon? = null
+    var click: ((Int, Dragon) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -28,12 +29,10 @@ class DragonRecyclerViewAdapter( private val values: List<Dragon>
         val item = values[position]
         holder.idView.text = position.toString()
         holder.contentView.text = item.nombre
-        holder.button.setOnClickListener{
-            //salta el evento
+        holder.button.setOnClickListener {
 
-               /* this.listener?.let {
-                    it.onClick(position,values[position])
-                }*/
+            this.click?.let { it1 -> it1(position, values[position]) }
+
         }
     }
 
@@ -42,7 +41,7 @@ class DragonRecyclerViewAdapter( private val values: List<Dragon>
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content
-        val button:Button=binding.button
+        val button: Button = binding.button
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
