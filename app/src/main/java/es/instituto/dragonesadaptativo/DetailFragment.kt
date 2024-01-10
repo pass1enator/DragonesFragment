@@ -25,18 +25,20 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        v = inflater.inflate(R.layout.fragment_detail, container, false)
+    public fun update(){
         this.dragonviewmodel.selected?.let {
             v.findViewById<TextView>(R.id.nombre).setText(it.nombre)
             v.findViewById<TextView>(R.id.edad).setText(it.edad.toString())
             v.findViewById<TextView>(R.id.descripcion).setText(it.descripcion.toString())
             //...resto de los campos
         }
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        v = inflater.inflate(R.layout.fragment_detail, container, false)
+       this.update()
 
         // Inflate the layout for this fragment
         return v //inflater.inflate(R.layout.fragment_detail, container, false)
